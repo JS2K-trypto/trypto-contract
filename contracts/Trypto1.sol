@@ -17,7 +17,12 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
 
     // Counter : mapping for badge upgrades
     
+    // badgeLevel 
+    // ex ) 5(tokenId) : 0(level)
+    // ex ) 8(tokenId) : 2(level)
     mapping(uint => uint) public badgeLevel;
+
+    // pendingUpgrade is for counting badgeLevel
     uint pendingUpgrade;
 
     uint lastTimeStamp;
@@ -31,6 +36,7 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
         lastTimeStamp = block.timestamp;
     }
 
+    // Mint NFT(Badge)
     function safeMint(address to, string memory uri) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -40,7 +46,7 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
     }
 
 
-    // upgrade nft by Change tokenURI
+    // (ONLY FOR TEST, WILL BE DELETED LATER) upgrade nft by Change tokenURI
     function upgradeBadge(uint _tokenId, string memory _uri) public onlyOwner {
         _setTokenURI(_tokenId, _uri);
 
@@ -68,7 +74,9 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
         pendingUpgrade++;
     }
 
-    // upgrade all nft badges 
+    // (NOT FINISHED, WORKING ON IT) 
+    // Automation calls this functions every interval,
+    // upgrade every badges that badeLevels are 1 or 2  
     function upgrade() internal onlyOwner {
         uint nftcounts = _tokenIdCounter.current();
         for(uint i=0;i<nftcounts;i++){
@@ -115,6 +123,7 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
         super._burn(tokenId);
     }
 
+    // shows NFT's Metadata  
     function tokenURI(uint256 tokenId)
         public
         view
