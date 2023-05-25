@@ -70,7 +70,7 @@ describe.only("Trypto1 Unit Tests", function() {
     }) 
 
     describe("#getNftsOf", async function () {
-        it("should return all nfts of specific User by JSON Object", async function() {
+        it("should return all nfts of specific User with Array type", async function() {
             const {trypto1, owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
     
             await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
@@ -86,6 +86,96 @@ describe.only("Trypto1 Unit Tests", function() {
         });
 
 
+
+    })
+
+    describe("#upgradeBadge", async function () {
+        it("should change tokenURI of specific NFT", async function() {
+            const {trypto1, owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
+    
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
+
+            const newTokenUri = "cold";
+
+            const upgradeBadge = await trypto1.upgradeBadge(0, newTokenUri);
+
+            const getTokenUri = await trypto1.tokenURI(0);
+            
+
+            //console.log(result);
+            expect(newTokenUri).to.equal(getTokenUri);
+
+
+
+            
+            
+            
+            
+            //assert.deepStrictEqual(result,  expected, "Error: must be same")
+            
+        });
+
+
+
+
+    })
+
+    describe("#increasebadgeLevel", async function() {
+        it("should be done only by Owner", async function() {
+            const {trypto1, otherAccount,owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
+
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
+
+            await expect(
+                trypto1
+                .connect(otherAccount)
+                .increasebadgeLevel(0))
+                .to.be.reverted.revertedWith('Ownable: caller is not the owner')
+
+
+        })
+
+        it("should increase badgeLevel", async function() {
+            const {trypto1, otherAccount,owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
+
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
+            await trypto1.connect(owner).increasebadgeLevel(0);
+            let result;
+            await trypto1.badgeLevel(0).then((res) => {
+                result = res.toNumber()
+            });
+
+            expect(result).to.equal(1);
+            
+
+        })
+
+        it("should be reverted if badeLevel is 2", async function() {
+            const {trypto1, otherAccount,owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
+
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
+            await trypto1.connect(owner).increasebadgeLevel(0);
+            await trypto1.connect(owner).increasebadgeLevel(0);
+            
+            await expect(trypto1
+                .connect(owner)
+                .increasebadgeLevel(0)
+            ).to.be.reverted;
+
+            
+
+        })
+    })
+
+    describe("#tokenURI", async function() {
+        it("should call tokenURI of NFT", async function() {
+            const {trypto1, otherAccount,owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
+
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
+
+            const result = await trypto1.tokenURI(0);
+            expect(result).to.equal(_tokenURI1);
+        })
 
     })
     
