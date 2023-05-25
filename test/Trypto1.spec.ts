@@ -178,6 +178,51 @@ describe.only("Trypto1 Unit Tests", function() {
         })
 
     })
+
+    describe("#upgrade", async function() {
+        it("should change every nft's tokenURI if badgeLevel is 1 or 2 ", async function() {
+            const {trypto1, otherAccount,owner, _tokenURI1, _tokenURI2} = await loadFixture(deployTrypto1Fixture);
+
+
+            // mint 3 nfts
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI1);
+            await trypto1.connect(owner).safeMint(owner.address, _tokenURI2);
+            await trypto1.connect(owner).safeMint(owner.address, "dummy");
+
+            // level up tokenId(0) to level 2
+            // level up tokenId (1) to level 1
+            await trypto1.connect(owner).increasebadgeLevel(0);
+            await trypto1.connect(owner).increasebadgeLevel(0);
+            await trypto1.connect(owner).increasebadgeLevel(1);
+
+            // execute upgrade()
+            await trypto1.upgrade();
+
+            // check nfts tokenUri
+            const tokenUri_gold = await trypto1.tokenURI(0);
+            const tokenUri_silver = await trypto1.tokenURI(1);
+            const tokenUri_bronze = await trypto1.tokenURI(2);
+            
+            
+            const gold = "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/gold.json";
+            const silver = "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/silver.json";
+            const bronze = "dummy"
+            
+
+            expect(tokenUri_gold).to.equal(gold)
+            
+            expect(tokenUri_bronze).to.equal(bronze)
+            expect(tokenUri_silver).to.equal(silver)
+
+
+            
+
+
+        })
+
+    })
+
+
     
     
 
