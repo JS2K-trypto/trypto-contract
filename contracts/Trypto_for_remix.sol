@@ -10,7 +10,7 @@ import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
 
 
 
-contract TryptoForRemix is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterface {
+contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterface {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -24,6 +24,14 @@ contract TryptoForRemix is ERC721, ERC721URIStorage, Ownable, AutomationCompatib
 
     // pendingUpgrade is for counting badgeLevel
     uint pendingUpgrade;
+
+    // Metadata information for each stage of the NFT on IPFS.
+    string[] IpfsUri = [
+        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/bronze.json",
+        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/silver.json",
+        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/gold.json"
+        
+    ];
 
     uint lastTimeStamp;
     uint interval;
@@ -69,19 +77,21 @@ contract TryptoForRemix is ERC721, ERC721URIStorage, Ownable, AutomationCompatib
 
     /// increase badgeLevel if user visit the country again and click the button
     function increasebadgeLevel(uint _tokenId) public onlyOwner {
-        require(badgeLevel[_tokenId] <= 2);
+        require(badgeLevel[_tokenId] < 2);
         badgeLevel[_tokenId]++;
         pendingUpgrade++;
     }
 
-    // (NOT FINISHED, WORKING ON IT) 
+    
     // Automation calls this functions every interval,
     // upgrade every badges that badeLevels are 1 or 2  
     function upgrade() public {
         uint nftcounts = _tokenIdCounter.current();
         for(uint i=0;i<nftcounts;i++){
             if(badgeLevel[i] == 1) {
-                _setTokenURI(i, "WTF");
+                _setTokenURI(i, IpfsUri[1]);
+            } else if (badgeLevel[i] == 2) {
+                _setTokenURI(i, IpfsUri[2]);
             }
             
         }
