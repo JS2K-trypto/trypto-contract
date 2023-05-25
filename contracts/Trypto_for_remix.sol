@@ -10,7 +10,7 @@ import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
 
 
 
-contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterface {
+contract TryptoForRemix is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterface {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -77,7 +77,7 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
     // (NOT FINISHED, WORKING ON IT) 
     // Automation calls this functions every interval,
     // upgrade every badges that badeLevels are 1 or 2  
-    function upgrade() internal onlyOwner {
+    function upgrade() public {
         uint nftcounts = _tokenIdCounter.current();
         for(uint i=0;i<nftcounts;i++){
             if(badgeLevel[i] == 1) {
