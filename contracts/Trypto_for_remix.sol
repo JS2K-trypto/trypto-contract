@@ -10,7 +10,7 @@ import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
 
 
 
-contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterface {
+contract TryptoForRemix is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterface {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -27,9 +27,9 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
 
     // Metadata information for each stage of the NFT on IPFS.
     string[] IpfsUri = [
-        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/bronze.json",
-        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/silver.json",
-        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/gold.json"
+        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPwAZ6xZkVsTYjtnCmuEK1AfAT3TVvBHQ6N32w76A51yn/bronze.json",
+        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPwAZ6xZkVsTYjtnCmuEK1AfAT3TVvBHQ6N32w76A51yn/silver.json",
+        "https://ipfs-2.thirdwebcdn.com/ipfs/QmPwAZ6xZkVsTYjtnCmuEK1AfAT3TVvBHQ6N32w76A51yn/gold.json"
         
     ];
 

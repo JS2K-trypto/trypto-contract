@@ -202,10 +202,13 @@ describe.only("Trypto1 Unit Tests", function() {
             const tokenUri_gold = await trypto1.tokenURI(0);
             const tokenUri_silver = await trypto1.tokenURI(1);
             const tokenUri_bronze = await trypto1.tokenURI(2);
+
             
             
-            const gold = "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/gold.json";
-            const silver = "https://ipfs-2.thirdwebcdn.com/ipfs/QmPAyANWeAUj774D9xo9FSnhujXwkd4KTTuWWYEn8XZjaD/silver.json";
+            
+            const gold = "https://ipfs-2.thirdwebcdn.com/ipfs/QmPwAZ6xZkVsTYjtnCmuEK1AfAT3TVvBHQ6N32w76A51yn/gold.json";        
+            const silver = "https://ipfs-2.thirdwebcdn.com/ipfs/QmPwAZ6xZkVsTYjtnCmuEK1AfAT3TVvBHQ6N32w76A51yn/silver.json";
+         
             const bronze = "dummy"
             
 
