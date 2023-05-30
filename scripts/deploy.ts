@@ -5,14 +5,15 @@ async function main() {
   const unlockTime = currentTimestampInSeconds + 60;
 
   const lockedAmount = ethers.utils.parseEther("0.001");
-
+  // Select contract factory in your contracts/ 
   const Trypto = await ethers.getContractFactory("Trypto");
+  // Set Constructor args when you deploy your contract, in "Trypto", it is "interval"
   const lock = await Trypto.deploy(60);
 
   await lock.deployed();
 
   console.log(
-    `Contract Trypto Successfuuly Deployed with ${ethers.utils.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    `Contract Trypto Successfuuly Deployed with unlock timestamp ${unlockTime} deployed to ${lock.address}`
   );
 }
 
