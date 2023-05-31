@@ -7,13 +7,17 @@ async function main() {
   const lockedAmount = ethers.utils.parseEther("0.001");
   // Select contract factory in your contracts/ 
   const Trypto = await ethers.getContractFactory("Trypto");
+  const Vrf = await ethers.getContractFactory("Vrf");
   // Set Constructor args when you deploy your contract, in "Trypto", it is "interval"
-  const lock = await Trypto.deploy(60);
-
-  await lock.deployed();
+  const lock_trypto = await Trypto.deploy(60);
+  const susbscription_id = Number(process.env.SUBSCRIPTION_ID);
+  const lock_vrf = await Vrf.deploy(susbscription_id)
+  await lock_trypto.deployed();
+  await lock_vrf.deployed();
 
   console.log(
-    `Contract Trypto Successfuuly Deployed with unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    `Contract Trypto Successfuuly Deployed with unlock timestamp ${unlockTime} deployed to ${lock_trypto.address}`,
+    `Contract Vrf Successfuuly Deployed with unlock timestamp ${unlockTime} deployed to ${lock_vrf.address}`,
   );
 }
 
