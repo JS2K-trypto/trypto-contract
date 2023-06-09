@@ -1,71 +1,94 @@
-# Trypto1.sol 설명
+This is [Hardhat](https://hardhat.org/) project including Solidity Smart concracts and Testing files.
 
-### 1. badgeLevel & pendingUpgrade
+## Getting Started
 
-badgeLevel은 tokenId : level 매핑 타입이고,
+First, `npm install` and install packages.
 
-pendingUpgrade은 badgeLevel의 len을 세기 위한 변수다. (매핑은 len 확인이 안된다)
+```bash
+npm install
+# or
+npm i
+```
 
----
+Second, create `.env` file and write some config vars according to `.env.example`
 
-## 2. safeMint (중요)
+(To use chainlink VRF, you should click [this](https://vrf.chain.link/?_ga=2.194788333.1171661276.1686287966-978871820.1683006690&_gac=1.251218804.1686288855.CjwKCAjw-IWkBhBTEiwA2exyO8tvB4Ar1GpzdoUzdZUaLQA-8RlFIP9tXZX3TAit09bP0SaLrYu0XxoC7rYQAvD_BwE), create subscription and get subscription id) 
 
-유저가 뱃지 받을 자격이 있으면 nft를 민팅하는 함수다
+```bash
+# 1. RPC URL (
+SEPOLIA_RPC_URL=""
+# or
+MUMBAI_RPC_URL= ""
 
-현재는 두 번째 인자로 uri를 받는데, 만약 뱃지 종류가 1개(한국)이라면 필요가 없을 것이다.
+# 2. Your wallet account's private key
+PRIVATE_KEY= ""
 
----
+# 3. Chainlink VRF subscription id
+SUBSCRIPTION_ID = 
 
-### 3. upgradeBadge(삭제 예정)
+```
 
-nft의 메타데이터를 정말 바꿀 수 있는지 테스트를 위한 함수
+Now you are ready to go!
 
----
+If you prefer Remix, just copy the `contracts/Trypto_for_remix.sol` file and paste on [Remix](https://remix.ethereum.org/#lang=en&optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.18+commit.87f61d96.js)
 
-## 4. getNftsOf (중요)
-
-유저의 주소를 넣어 실행하면 nft들의 메타데이터(uri)를 배열에 담아 반환하는 함수
-
-유저가 뱃지들 볼 수 있는 페이지에서 실행해야 한다.
-
-(뱃지 종류가 1개라면 배열도 필요가 없을 것이다...)
-
----
-
-## 5. increasebadgeLevel (중요)
-
-서버에서 조건이 맞는 경우(5번 클릭했다던지, 쿨타임이 지났던지) 
-
-실행해 특정 뱃지의 level을 올려준다.
-
-레벨은 (0,1,2)까지 있다.
+If you want to write, compile, deploy and test with Hardhat, keep eyes on me!
 
 ---
 
-## 6. upgrade (중요)
+## How to Deploy Contracts
 
-5번 함수를 통해 mapping이 계속 업데이트 될 것이다.
+You should write `npx hardhat compile` for comipile first,
+and `npx hardhat run --network mumbai scripts/deploy.ts` for deploying.
+(for sepolia, `npx hardhat run --network sepolia scripts/deploy.ts`)
 
-tokenId <-> level <br/>
-3 ------ 2 <br/>
-9 ------ 1 <br/>
-14 ------- 2 <br/>
+```bash
+# compile 
+npx hardhat compile
 
-(레벨이 0인 뱃지들은 들어오지 않는다)
+# deploy
+npx hardhat run --network mumbai scripts/deploy.ts
+# or
+npx hardhat run --network sepolia scripts/deploy.ts
+
+
+```
+If it is successfully depolyed, you will get contract address(CA) on your console.
+
+```bash
+
+Contract Trypto Successfuuly Deployed with unlock timestamp 1685519621 deployed to 0xe1340bFAbB988C10bcD58051a5f96F4eA0028576
+
+```
 
 ---
-이 함수는 Automation으로 실행되며, 1분마다 체인링크 노드가 실행시킨다. 
-이 함수가 매핑에 들어있는 데이터 개수만큼 반복문을 돌려서, 
-레벨 1인 뱃지는 실버등급에 맞는 uri를 , 레벨 2인 뱃지는 골드 uri로 바꿔준다.
 
+## How to test your smart contracts
 
+Hardhat provides testing tools for smart contracts.
 
+```bash
 
+npx hardhat test
 
+```
 
+We already made some testing units for `Trypto1.sol`, except for chainlink products(VRF, Automation, Data Feed).
 
+If you customize or make your own tests, modify or create `tests/Trypto1.sepc.ts'.
 
+Hardhat provide local testnet so that your contracts are deployed to hardhat local-network and be tested.
 
+---
 
+## Learn More
+
+To learn more about Chainlink products we use (VRF, DataFeed, Automation), take a look at the following resources :
+
+- [Chainlink Docs](https://docs.chain.link/)
+
+To learn and practice simple contract codes for studying chainlink products, take a look at the following references :
+
+- [Build Defi apps with chainlink](https://velog.io/@youngju307/%EC%B2%B4%EC%9D%B8%EB%A7%81%ED%81%AC-Building-a-DeFi-App-Code-along)
 
 
