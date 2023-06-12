@@ -142,7 +142,7 @@ contract Trypto is ERC721, ERC721URIStorage, Ownable, AutomationCompatibleInterf
 
     /// increase badgeLevel if user visit the country again and click the button
     function increasebadgeLevel(uint _tokenId) public onlyOwner {
-        require(badgeLevel[_tokenId] < 2);
+        require(badgeLevel[_tokenId] <= 2);
         badgeLevel[_tokenId]++;
         pendingUpgrade++;
     }
